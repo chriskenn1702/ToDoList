@@ -14,13 +14,19 @@ struct ToDoListView: View {
         NavigationStack{
             List{
                 ForEach(toDosVM.toDos) {toDo in
-                    
-                    NavigationLink {
-                        DetailView(toDo: toDo)
-                    } label: {
-                        Text(toDo.item)
+                    HStack{
+                        Image(systemName: toDo.completed ? "checkmark.rectangle": "rectangle")
+                            .onTapGesture {
+                                toDosVM.toggleCompleted(toDo: toDo)
+                            }
+                        
+                        NavigationLink {
+                            DetailView(toDo: toDo)
+                        } label: {
+                            Text(toDo.item)
+                        }
+                        .font(.title2)
                     }
-                    .font(.title2)
                 }
                 //Shorthand calls
                 .onDelete(perform: toDosVM.deleteToDo)
